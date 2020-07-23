@@ -11,8 +11,8 @@ var matchHistoryMap = new Map();
 
 // Initializes your app with your bot token and signing secret
 const app = new App({
-    token: process.env.SLACK_BOT_TOKEN,
-    signingSecret: process.env.SLACK_SIGNING_SECRET
+    token: BOT_TOKEN,
+    signingSecret: "292acb173b37d8d07f9e393ad72b0efc"
 });
 
 app.message('match', async ({ message, say }) => {
@@ -34,7 +34,6 @@ app.action('yes_button', async ({ ack, say }) => {
     await say('lovely :smile:');
 });
 
-
 app.action('scheduled_button', async ({ ack, say }) => {
     await ack();
     await say('gotcha :thumbsup_all:');
@@ -45,7 +44,6 @@ app.action('no_button', async ({ ack, say }) => {
     await ack();
     await say('No worries, I will check in later :wave:');
 });
-
 
 function sendReminders() {
     openChats.forEach(chat => sendRemindMessage(chat));
@@ -221,15 +219,6 @@ async function getChannelMembers(channelId) {
     } catch (error) {
         console.log('ERROR: ' + error);
     }
-}
-
-let test = () => {
-    const matches = getMatches(userList.map(user => user.id));
-    console.log("USER LIST: " + userList.map(user => user.id));
-    console.log("MATCHES: ")
-    matches.forEach(match => console.log("MATCH: " + match));
-    console.log("MATCH HISTORY: ");
-    matchHistoryMap.forEach((v, k) => console.log(k + " : " + v));
 }
 
 (async () => {
