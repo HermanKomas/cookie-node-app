@@ -1,6 +1,21 @@
 const { App } = require('@slack/bolt');
+const winston = require('winston');
 
 require('dotenv').config();
+
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+      //
+      // - Write all logs with level `error` and below to `error.log`
+      // - Write all logs with level `info` and below to `combined.log`
+      //
+      new winston.transports.File({ filename: 'error.log', level: 'error' }),
+      new winston.transports.File({ filename: 'combined.log' }),
+    ],
+});
 
 const BOT_TOKEN = "xoxb-1142578157202-1148297341394-7hRXRjqKPlxQIpMVNA0yd8L8";
 const COOKIE_CHANNEL = "C0146HCG2LA";
@@ -16,6 +31,9 @@ const app = new App({
 });
 
 app.message('match', async ({ message, say }) => {
+
+    logger.info('Recieved match request')
+    
     const matches = getMatches(userList.map(user => user.id));
     const chatIds = await Promise.all(matches.map(match => openConversation(match)));
 
@@ -225,7 +243,14 @@ async function getChannelMembers(channelId) {
     // Start your app
     await app.start(process.env.PORT || 3000);
 
+    if (process.env.NODE_ENV !== 'production') {
+        logger.add(new winston.transports.Console({
+          format: winston.format.simple(),
+        }));
+    }
+
     console.log('⚡️ Bolt app is running!');
+    logger.info('⚡️ Bolt app is running!')
 
     const channelMembersIds = await getChannelMembers(COOKIE_CHANNEL);
     const allUsers = await Promise.all(channelMembersIds.map(memberId => getUserInfo(memberId)));
