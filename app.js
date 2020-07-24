@@ -17,7 +17,7 @@ const logger = winston.createLogger({
     ],
 });
 
-const BOT_TOKEN = "xoxb-1142578157202-1148297341394-7hRXRjqKPlxQIpMVNA0yd8L8";
+const BOT_TOKEN = "xoxb-1142578157202-1148297341394-QmDkg6Wio2n4RqYzSdFC6atr";
 const COOKIE_CHANNEL = "C0146HCG2LA";
 var userList;
 var openChats;
@@ -33,7 +33,7 @@ const app = new App({
 app.message('match', async ({ message, say }) => {
 
     logger.info('Recieved match request')
-    
+
     const matches = getMatches(userList.map(user => user.id));
     const chatIds = await Promise.all(matches.map(match => openConversation(match)));
 
