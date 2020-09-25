@@ -32,8 +32,8 @@ if (process.env.NODE_ENV !== 'production') {
 const bot = new Bot(logger, app);
 
 app.message('match', async ({ message, say }) => {
-    console.log("got a match request");
-    bot.match();
+    logger.info("got a match")
+    await bot.match();
 });
 
 app.message('remind', async ({ message, say }) => {

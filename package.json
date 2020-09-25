@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./src/app.js",
     "test": "npx ava --watch --verbose"
   },
   "author": "",
