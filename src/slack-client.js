@@ -1,5 +1,5 @@
 import Bot from './bot.js';
-import App from '@slack/bolt';
+import { App } from '@slack/bolt';
 import winston from 'winston';
 
 const logger = winston.createLogger({
@@ -18,7 +18,7 @@ const logger = winston.createLogger({
 
 const BOT_TOKEN = "xoxb-1142578157202-1148297341394-z7YKdL2iTSRy5bx3eTXEKymZ";
 
-const app = new App.App ({
+const app = new App ({
     token: BOT_TOKEN,
     signingSecret: "292acb173b37d8d07f9e393ad72b0efc"
 });
@@ -55,5 +55,11 @@ app.action('no_button', async ({ ack, say }) => {
     await say('No worries, I will check in later :wave:');
 });
 
+(async () => {
+    // Start your app
+    await app.start(process.env.PORT || 3000);
+
+    console.log('⚡️ Bolt app is running!');
+})();
 
 export default app;
