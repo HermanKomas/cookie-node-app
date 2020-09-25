@@ -4,7 +4,7 @@ import math from "mathjs";
 let matchHistory = new Map();
 let openChats;
 const COOKIE_CHANNEL = "C0146HCG2LA";
-const BOT_TOKEN = "xoxb-1142578157202-1148297341394-QmDkg6Wio2n4RqYzSdFC6atr";
+const BOT_TOKEN = "xoxb-1142578157202-1148297341394-z7YKdL2iTSRy5bx3eTXEKymZ";
 
 class Bot {
 
